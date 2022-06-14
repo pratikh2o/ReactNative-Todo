@@ -1,33 +1,30 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Button, TextInput } from "react-native";
+import { StyleSheet, View, Button, TextInput } from "react-native";
+import { useState } from "react";
+import TodoList from "./components/TodoList";
+import TodoInput from "./components/TodoInput";
 
 export default function App() {
+  const [todoList, setTodoList] = useState([]);
+
+  const onSubmit = (todoL) => {
+    setTodoList([
+      ...todoList,
+      { todotext: todoL, id: Math.random().toString() },
+    ]);
+  };
   return (
     <View style={styles.container}>
-      <View style={styles.inputContainer}>
-        <TextInput style={styles.textInput} placeholder="Enter Todo" />
-        <Button title="Add Todo" />
-      </View>
-      <View>
-        <Text>List of Todos....</Text>
-      </View>
+      <TodoInput addTodo={onSubmit} />
+      <TodoList todoList={todoList} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    padding: 30,
-  },
-  inputContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  textInput: {
-    borderColor: "grey",
-    borderWidth: 2,
-    width: "80%",
-    marginRight: 8,
-    borderRadius: 5,
+    flex: 1,
+    paddingTop: 50,
+    paddingHorizontal: 16,
+    backgroundColor: "black",
   },
 });
