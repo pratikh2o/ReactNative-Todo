@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, FlatList } from "react-native";
+import { StyleSheet, Text, View, FlatList, Pressable } from "react-native";
 
 const TodoList = (props) => {
   return (
@@ -7,7 +7,11 @@ const TodoList = (props) => {
         data={props.todoList}
         alwaysBounceVertical={true}
         renderItem={(data) => {
-          return <Text style={styles.todoList}>{data.item.todotext}</Text>;
+          return (
+            <Pressable onPress={props.deleteTodo.bind(this, data.item.id)}>
+              <Text style={styles.todoList}>{data.item.todotext}</Text>
+            </Pressable>
+          );
         }}
         keyExtractor={(item, index) => {
           return item.id;
@@ -20,6 +24,7 @@ const TodoList = (props) => {
 const styles = StyleSheet.create({
   todoContainer: {
     flex: 5,
+    marginTop: 10,
   },
   todoList: {
     color: "white",

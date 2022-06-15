@@ -1,4 +1,4 @@
-import { StyleSheet, View, Button, TextInput } from "react-native";
+import { StyleSheet, View, Button, TextInput, Modal } from "react-native";
 import { useState } from "react";
 
 const TodoInput = (props) => {
@@ -11,38 +11,56 @@ const TodoInput = (props) => {
   const submit = () => {
     props.addTodo(todo);
     setTodo("");
+    props.closeModel();
   };
 
+  const toggleModel = () => {};
+
   return (
-    <View style={styles.inputContainer}>
-      <TextInput
-        style={styles.textInput}
-        placeholder="Enter Todo"
-        onChangeText={handleInput}
-      />
-      <Button title="Add Todo" onPress={submit} />
-    </View>
+    <Modal visible={props.visible} animationType="slide">
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.textInput}
+          placeholder="Enter Todo"
+          onChangeText={handleInput}
+          value={todo}
+        />
+        <View style={styles.buttonContainer}>
+          <View style={{ margin: 10 }}>
+            <Button title="Add Todo" color={"#5e0acc"} onPress={submit} />
+          </View>
+          <View style={{ margin: 10 }}>
+            <Button
+              title="Cancel"
+              color={"#5e0acc"}
+              onPress={props.closeModel}
+            />
+          </View>
+        </View>
+      </View>
+    </Modal>
   );
 };
 
 const styles = StyleSheet.create({
   inputContainer: {
     flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: "column",
+    justifyContent: "center",
     alignItems: "center",
     marginBottom: 24,
-    borderBottomColor: "white",
-    borderBottomWidth: 2,
   },
   textInput: {
     backgroundColor: "white",
-    borderColor: "grey",
+    borderColor: "black",
     borderWidth: 2,
     width: "60%",
     marginRight: 8,
     borderRadius: 5,
     paddingHorizontal: 5,
+  },
+  buttonContainer: {
+    flexDirection: "row",
   },
 });
 
